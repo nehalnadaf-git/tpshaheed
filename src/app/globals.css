@@ -2,25 +2,190 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #111111;
+  --accent: #d8b77a;
+  --navy: #17255b;
+  --dark: #0f0f10;
+  --header-h: 80px; /* fixed header height for scroll offset */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-navy: var(--navy);
+  --color-accent: var(--accent);
+  --color-dark: var(--dark);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Base reset ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* offset anchor scrolling below sticky header */
+  scroll-padding-top: var(--header-h);
+  -webkit-text-size-adjust: 100%; /* prevent iOS font scaling */
+  text-size-adjust: 100%;
 }
 
 body {
+  margin: 0;
+  /* prevent any section from causing horizontal scroll */
+  overflow-x: hidden;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Helvetica, Arial, sans-serif;
+  /* improve text rendering on all devices */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  /* remove tap highlight on iOS */
+  -webkit-tap-highlight-color: transparent;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── Page grid (desktop-only) ── */
+.page-grid {
+  min-height: 100svh;
+  background-image: repeating-linear-gradient(
+    to right,
+    transparent 0,
+    transparent calc(16.666% - 1px),
+    rgba(17, 17, 17, 0.038) calc(16.666% - 1px),
+    rgba(17, 17, 17, 0.038) 16.666%
+  );
+}
+
+/* Hide background grid lines on tablet & below */
+@media (max-width: 1023px) {
+  .page-grid {
+    background-image: none;
+  }
+}
+
+/* ── iOS Safe-Area Insets ── */
+header {
+  /* Extend header colour behind Dynamic Island / status bar on iOS */
+  padding-top: env(safe-area-inset-top);
+}
+
+footer {
+  /* Prevent footer content from being hidden behind home indicator */
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ── Respect prefers-reduced-motion system setting ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Glow border on Why Choose cards ── */
+.glow-border {
+  position: relative;
+}
+
+.glow-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(216, 183, 124, 0.4), rgba(255, 255, 255, 0.05));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ── Force crisp white text on all navy / dark buttons & links ── */
+button[class*="bg-[var(--navy)]"],
+a[class*="bg-[var(--navy)]"],
+button[class*="bg-[#17255b]"],
+a[class*="bg-[#17255b]"],
+button[class*="bg-[#111f4f]"],
+a[class*="bg-[#111f4f]"],
+button[class*="bg-zinc-900"],
+a[class*="bg-zinc-900"] {
+  color: #ffffff !important;
+}
+
+button[class*="bg-[var(--navy)]"] *,
+a[class*="bg-[var(--navy)]"] *,
+button[class*="bg-[#17255b]"] *,
+a[class*="bg-[#17255b]"] *,
+button[class*="bg-[#111f4f]"] *,
+a[class*="bg-[#111f4f]"] *,
+button[class*="bg-zinc-900"] *,
+a[class*="bg-zinc-900"] * {
+  color: #ffffff !important;
+}
+
+/* Only show glow on hover-capable devices */
+@media (hover: hover) {
+  .glow-border:hover::before {
+    opacity: 1;
+  }
+}
+
+.text-outline {
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+/* ── Touch-friendly minimum tap target ── */
+button,
+a,
+[role="button"] {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Override for inline nav links which should not get min-width */
+nav a {
+  min-width: unset;
+}
+
+/* Override for footer links — allow natural inline display */
+footer ul a {
+  min-height: 44px;
+  min-width: unset;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Mobile nav drawer */
+.mobile-nav-open {
+  overflow: hidden;
+}
+
