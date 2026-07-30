@@ -112,8 +112,7 @@ export default function Home() {
 
       {/* ── Section 1: Hero ─────────────────────────────────────────────── */}
       <section
-        className="relative overflow-hidden bg-zinc-900"
-        style={{ height: "clamp(55vh, 56.35vw, 90vh)" }}
+        className="relative overflow-hidden bg-zinc-950 h-[65vh] min-h-[440px] sm:h-[75vh] sm:min-h-[520px] lg:h-[86vh] lg:min-h-[600px]"
       >
         <div className="absolute inset-0">
           <Image
@@ -121,25 +120,28 @@ export default function Home() {
             alt="Tippu Shaheed Institute of Technology campus"
             fill
             priority
-            className="object-cover object-center"
+            className="object-cover object-[center_28%]"
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/65" />
+          {/* Subtle light ambient gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
         </div>
 
-        <div className="relative z-10 flex h-full flex-col justify-end p-4 sm:p-7 lg:p-10">
-          <div className="mb-4 flex flex-col justify-between gap-4 sm:mb-6 sm:flex-row sm:items-end">
-            <Reveal className="rounded-xl border border-white/25 bg-black/30 p-4 text-white backdrop-blur-md sm:rounded-[1.25rem] max-w-lg">
-              <p className="text-[10px] uppercase tracking-[0.24em] text-white/75 sm:text-xs sm:tracking-[0.28em]">
-                Tippu Shaheed Polytechnic · Estd. 1980
-              </p>
-              <p className="mt-1.5 text-base font-medium leading-snug text-white sm:mt-2 sm:text-lg sm:leading-tight">
+        <div className="relative z-10 flex h-full flex-col justify-end px-4 pb-5 pt-12 sm:px-8 sm:pb-8 lg:px-12 lg:pb-10">
+          <div className="mx-auto flex w-full max-w-[1550px] flex-col justify-between gap-4 sm:flex-row sm:items-end">
+            <Reveal className="max-w-2xl">
+              {/* Headline Description with Shadow & Dynamic Scaling */}
+              <h1 className="text-base font-semibold leading-snug text-white [text-shadow:_0_2px_8px_rgba(0,0,0,0.85)] sm:text-xl md:text-2xl lg:text-[1.7rem] lg:leading-tight">
                 AICTE-approved &amp; DTE-aided polytechnic in Hubli offering 6 diploma engineering branches across a 6-acre green campus.
-              </p>
+              </h1>
             </Reveal>
 
-            <div className="text-white/95">
-              <div className="text-2xl font-medium sm:text-3xl">2026</div>
+            {/* Year / Established Tag cleanly integrated at bottom right */}
+            <div className="flex items-center gap-3 text-white/90">
+              <div className="flex flex-col items-start sm:items-end">
+                <span className="text-[10px] font-semibold uppercase tracking-widest text-amber-300/80">Academic Year</span>
+                <span className="text-2xl font-bold tracking-tight text-white sm:text-3xl lg:text-4xl drop-shadow-md">2026</span>
+              </div>
             </div>
           </div>
         </div>
